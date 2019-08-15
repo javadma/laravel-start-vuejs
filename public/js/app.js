@@ -51188,7 +51188,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        createUser: function createUser() {}
+        createUser: function createUser() {
+            this.form.post('api/user');
+        }
     },
     mounted: function mounted() {
         console.log('Users Component mounted.');
