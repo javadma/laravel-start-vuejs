@@ -51413,7 +51413,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("has-error", {
-                            attrs: { form: _vm.form, field: "password" }
+                            attrs: { form: _vm.form, field: "type" }
                           })
                         ],
                         1

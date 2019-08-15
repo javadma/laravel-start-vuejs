@@ -83,7 +83,7 @@
                                     <option value="admin">Admin</option>
                                     <option value="user">Standard User</option>
                                     <option value="author">author</option>
-                                    <has-error :form="form" field="password"></has-error>
+                                    <has-error :form="form" field="type"></has-error>
                                 </select></div>
 
                             <div class="form-group">
