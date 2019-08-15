@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -8,21 +7,28 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import {Form, HasError, AlertError} from 'vform'
+
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
+
+window.Form = Form;
 
 import VueRouter from 'vue-router'
+
 Vue.use(VueRouter);
 
 
 let routes = [
-    { path: '/dashboard', component: require('./components/Dashboard.vue') },
-    { path: '/users', component: require('./components/Users.vue') },
-    { path: '/profile', component: require('./components/Profile.vue') },
-  ];
+    {path: '/dashboard', component: require('./components/Dashboard.vue')},
+    {path: '/users', component: require('./components/Users.vue')},
+    {path: '/profile', component: require('./components/Profile.vue')},
+];
 
 const router = new VueRouter({
     mode: 'history',
     routes // short for `routes: routes`
-  });
+});
 
 
 /**
