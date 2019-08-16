@@ -10,7 +10,20 @@ window.Vue = require('vue');
 import {AlertError, Form, HasError} from 'vform'
 import VueRouter from 'vue-router'
 import moment from 'moment'
+import Swal from 'sweetalert2'
+window.swal = Swal;
+
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+});
+window.toast = Toast;
+
 import VueProgressBar from 'vue-progressbar'
+
 
 Vue.use(VueProgressBar, {
     color: 'rgb(143, 255, 199)',
