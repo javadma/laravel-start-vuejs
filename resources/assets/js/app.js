@@ -10,6 +10,13 @@ window.Vue = require('vue');
 import {AlertError, Form, HasError} from 'vform'
 import VueRouter from 'vue-router'
 import moment from 'moment'
+import VueProgressBar from 'vue-progressbar'
+
+Vue.use(VueProgressBar, {
+    color: 'rgb(143, 255, 199)',
+    failedColor: 'red',
+    height: '4px'
+});
 
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
