@@ -11,9 +11,11 @@ import {AlertError, Form, HasError} from 'vform'
 import VueRouter from 'vue-router'
 import moment from 'moment'
 import Swal from 'sweetalert2'
+import VueProgressBar from 'vue-progressbar'
+
 window.swal = Swal;
 
-
+window.Fire = new Vue();
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -21,8 +23,6 @@ const Toast = Swal.mixin({
     timer: 3000
 });
 window.toast = Toast;
-
-import VueProgressBar from 'vue-progressbar'
 
 
 Vue.use(VueProgressBar, {
@@ -41,7 +41,7 @@ Vue.use(VueRouter);
 Vue.filter('upText', function (text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
 });
-Vue.filter('myDate',function (date) {
+Vue.filter('myDate', function (date) {
     return moment(date).format('MMMM Do YYYY');
 
 });

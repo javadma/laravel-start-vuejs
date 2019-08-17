@@ -127,11 +127,12 @@
             createUser() {
                 this.$Progress.start();
                 this.form.post('api/user');
+                Fire.$emit('AfterCreate');
                 toast.fire({
                     type: 'success',
                     title: 'User Created  successfully'
                 });
-                this.loadUsers();
+                // this.loadUsers();
                 $('#addNew').modal('hide');
                 this.$Progress.finish();
             },
@@ -141,7 +142,10 @@
         },
         created() {
             this.loadUsers();
-            setInterval(() => this.loadUsers(),5000);
+            Fire.$on('AfterCreate', () => {
+                this.loadUsers();
+            });
+            // setInterval(() => this.loadUsers(),5000);
         }
     }
 </script>
