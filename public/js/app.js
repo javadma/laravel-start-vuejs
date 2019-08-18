@@ -71217,19 +71217,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        createUser: function createUser() {
+        deleteUser: function deleteUser(id) {
             var _this = this;
+
+            swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(function (result) {
+                if (result.value) {
+                    _this.form.delete('/api/user/' + id).then(function () {
+                        swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+                        Fire.$emit('updateTable');
+                    }).catch(function () {
+                        swal.fire('failed!', 'the user not deleted', 'warning');
+                    });
+                }
+            });
+        },
+        createUser: function createUser() {
+            var _this2 = this;
 
             this.$Progress.start();
             this.form.post('api/user').then(function () {
-                Fire.$emit('AfterCreate');
+                Fire.$emit('updateTable');
                 toast.fire({
                     type: 'success',
                     title: 'User Created  successfully'
                 });
                 // this.loadUsers();
                 $('#addNew').modal('hide');
-                _this.$Progress.finish();
+                _this2.$Progress.finish();
             }).catch(function () {
                 toast.fire({
                     type: 'failed',
@@ -71238,20 +71260,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         loadUsers: function loadUsers() {
-            var _this2 = this;
+            var _this3 = this;
 
             axios.get('/api/user').then(function (_ref) {
                 var data = _ref.data;
-                return _this2.users = data.data;
+                return _this3.users = data.data;
             });
         }
     },
     created: function created() {
-        var _this3 = this;
+        var _this4 = this;
 
         this.loadUsers();
-        Fire.$on('AfterCreate', function () {
-            _this3.loadUsers();
+        Fire.$on('updateTable', function () {
+            _this4.loadUsers();
         });
         // setInterval(() => this.loadUsers(),5000);
     }
@@ -71295,7 +71317,24 @@ var render = function() {
                           _vm._v(_vm._s(_vm._f("myDate")(user.created_at)))
                         ]),
                         _vm._v(" "),
-                        _vm._m(2, true)
+                        _c("td", [
+                          _vm._m(2, true),
+                          _vm._v(
+                            "\n                                |\n                                "
+                          ),
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  _vm.deleteUser(user.id)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fa fa-trash-alt red" })]
+                          )
+                        ])
                       ])
                     })
                   ],
@@ -71620,16 +71659,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("i", { staticClass: "fa fa-user-edit" })
-      ]),
-      _vm._v(
-        "\n                                |\n                                "
-      ),
-      _c("a", { attrs: { href: "#" } }, [
-        _c("i", { staticClass: "fa fa-trash-alt red" })
-      ])
+    return _c("a", { attrs: { href: "#" } }, [
+      _c("i", { staticClass: "fa fa-user-edit" })
     ])
   },
   function() {

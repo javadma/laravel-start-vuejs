@@ -34,7 +34,7 @@
                                         <i class="fa fa-user-edit"></i>
                                     </a>
                                     |
-                                    <a href="#">
+                                    <a href="#" @click="deleteUser(user.id)">
                                         <i class="fa fa-trash-alt red"></i>
                                     </a>
                                 </td>
@@ -124,11 +124,40 @@
             }
         },
         methods: {
+            deleteUser(id) {
+                swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        this.form.delete('/api/user/' + id).then(() => {
+                            swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                            Fire.$emit('updateTable');
+                        }).catch(() => {
+                            swal.fire(
+                                'failed!',
+                                'the user not deleted',
+                                'warning'
+                            )
+                        });
+
+                    }
+                })
+            },
             createUser() {
                 this.$Progress.start();
                 this.form.post('api/user')
                     .then(() => {
-                        Fire.$emit('AfterCreate');
+                        Fire.$emit('updateTable');
                         toast.fire({
                             type: 'success',
                             title: 'User Created  successfully'
@@ -150,7 +179,7 @@
         },
         created() {
             this.loadUsers();
-            Fire.$on('AfterCreate', () => {
+            Fire.$on('updateTable', () => {
                 this.loadUsers();
             });
             // setInterval(() => this.loadUsers(),5000);
