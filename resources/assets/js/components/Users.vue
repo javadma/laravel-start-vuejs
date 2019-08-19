@@ -30,7 +30,7 @@
                                 <td>{{user.type | upText}}</td>
                                 <td>{{user.created_at | myDate}}</td>
                                 <td>
-                                    <a href="#">
+                                    <a href="#" @click="editModal(user)">
                                         <i class="fa fa-user-edit"></i>
                                     </a>
                                     |
@@ -53,8 +53,9 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add New</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <h5 v-show="!editMode" class="modal-title" id="exampleModalLabel">Add New</h5>
+                        <h5 v-show="editMode" class="modal-title" id="exampleModalLabelUpdate">Update User Info</h5>
+                        <button @click="newModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -98,7 +99,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button v-show="editMode" type="submit" class="btn btn-success">Update</button>
+                            <button v-show="!editMode" type="submit" class="btn btn-primary">Create</button>
                         </div>
                     </form>
                 </div>
@@ -111,6 +113,7 @@
     export default {
         data() {
             return {
+                editMode: false,
                 users: {},
                 form: new Form({
                     name: '',
@@ -124,6 +127,18 @@
             }
         },
         methods: {
+            editModal(user) {
+                this.editMode = true;
+                this.form.reset();
+                $('#addNew').modal('show');
+                this.form.fill(user);
+
+            },
+            newModal() {
+                this.editMode = false;
+                this.form.reset();
+                $('#addNew').modal('show');
+            },
             deleteUser(id) {
                 swal.fire({
                     title: 'Are you sure?',
