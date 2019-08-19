@@ -59,7 +59,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form @submit.prevent="createUser" @keydown="form.onKeydown($event)">
+                    <form @submit.prevent="editMode ? updateUser() : createUser()" @keydown="form.onKeydown($event)">
                         <div class="modal-body">
 
                             <div class="form-group">
@@ -116,6 +116,7 @@
                 editMode: false,
                 users: {},
                 form: new Form({
+                    id: '',
                     name: '',
                     email: '',
                     bio: '',
@@ -187,6 +188,25 @@
                     });
                 });
 
+            },
+            updateUser() {
+                this.$Progress.start();
+                this.form.patch('/api/user/' + this.form.id)
+                    .then(() => {
+                        Fire.$emit('updateTable');
+                        toast.fire({
+                            type: 'success',
+                            title: 'User information update successfully'
+                        });
+                    })
+                    .catch(() => {
+                        toast.fire({
+                            type: 'warning',
+                            title: 'User information not updated!'
+                        });
+                    });
+                this.$Progress.finish();
+                $('#addNew').modal('hide');
             },
             loadUsers() {
                 axios.get('/api/user').then(({data}) => (this.users = data.data));

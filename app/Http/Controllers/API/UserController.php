@@ -58,12 +58,16 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $user->update([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'bio' => $request['bio'],
-            'type' => $request['type'],
-            'password' => Hash::make($request['name']),
+
+        $this->validate($request, [
+            'name' => 'required|string|max:191',
+            'email' => 'required|string|email|max:191|unique:users,email,' . $user->id,
+            'password' => 'sometimes|required|min:6'
+        ]);
+
+        $user->update($request->all());
+        return response()->json([
+            'message' => 'User Update Successfully'
         ]);
     }
 

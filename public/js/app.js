@@ -71208,6 +71208,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             editMode: false,
             users: {},
             form: new Form({
+                id: '',
                 name: '',
                 email: '',
                 bio: '',
@@ -71272,6 +71273,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     title: 'User Not Created'
                 });
             });
+        },
+        updateUser: function updateUser() {
+            this.$Progress.start();
+            this.form.patch('/api/user/' + this.form.id).then(function () {
+                Fire.$emit('updateTable');
+                toast.fire({
+                    type: 'success',
+                    title: 'User information update successfully'
+                });
+            }).catch(function () {
+                toast.fire({
+                    type: 'warning',
+                    title: 'User information not updated!'
+                });
+            });
+            this.$Progress.finish();
+            $('#addNew').modal('hide');
         },
         loadUsers: function loadUsers() {
             var _this3 = this;
@@ -71457,7 +71475,7 @@ var render = function() {
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
-                      return _vm.createUser($event)
+                      _vm.editMode ? _vm.updateUser() : _vm.createUser()
                     },
                     keydown: function($event) {
                       _vm.form.onKeydown($event)
