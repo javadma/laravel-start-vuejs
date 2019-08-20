@@ -14,7 +14,7 @@ import Swal from 'sweetalert2'
 import VueProgressBar from 'vue-progressbar'
 
 window.swal = Swal;
-
+window.component = new Vue();
 window.Fire = new Vue();
 const Toast = Swal.mixin({
     toast: true,
@@ -45,10 +45,20 @@ Vue.filter('myDate', function (date) {
     return moment(date).format('MMMM Do YYYY');
 
 });
+Vue.component(
+    'passport-clients',
+    require('./components/passport/Clients.vue'));
+Vue.component(
+    'passport-authorized-clients',
+    require('./components/passport/AuthorizedClients.vue'));
 
+Vue.component(
+    'passport-personal-access-tokens',
+    require('./components/passport/PersonalAccessTokens.vue'));
 
 let routes = [
     {path: '/dashboard', component: require('./components/Dashboard.vue')},
+    {path: '/developer', component: require('./components/Developer.vue')},
     {path: '/users', component: require('./components/Users.vue')},
     {path: '/profile', component: require('./components/Profile.vue')},
 ];
@@ -57,6 +67,7 @@ const router = new VueRouter({
     mode: 'history',
     routes // short for `routes: routes`
 });
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
