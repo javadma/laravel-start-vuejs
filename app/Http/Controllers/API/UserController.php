@@ -36,6 +36,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
+
         return User::create([
             'name' => $request['name'],
             'email' => $request['email'],
@@ -65,6 +66,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $user = User::findOrFail($id);
 
         $this->validate($request, [
@@ -90,5 +92,10 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
         return ['message' => 'delete successfully'];
+    }
+
+    public function profile()
+    {
+        return auth('api')->user();
     }
 }

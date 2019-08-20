@@ -45,7 +45,7 @@
                                         <label for="inputName" class="col-sm-2 control-label">Name</label>
 
                                         <div class="col-sm-12">
-                                            <input type="" class="form-control" id="inputName" placeholder="Name">
+                                            <input type="text" v-model="form.name" class="form-control" id="inputName" placeholder="Name">
                                             <has-error :form="form" field="name"></has-error>
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@
                                         <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
                                         <div class="col-sm-12">
-                                            <input type="email" class="form-control" id="inputEmail"
+                                            <input v-model="form.email"  type="email" class="form-control" id="inputEmail"
                                                    placeholder="Email">
                                             <has-error :form="form" field="email"></has-error>
                                         </div>
@@ -63,7 +63,7 @@
                                         <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
 
                                         <div class="col-sm-12">
-                                            <textarea class="form-control" id="inputExperience"
+                                            <textarea v-model="form.bio" class="form-control" id="inputExperience"
                                                       placeholder="Experience"></textarea>
                                             <has-error :form="form" field="bio"></has-error>
                                         </div>
@@ -113,8 +113,25 @@
 
 <script>
     export default {
+        data() {
+            return {
+                form: new Form({
+                    id: '',
+                    name: '',
+                    email: '',
+                    bio: '',
+                    type: '',
+                    photo: '',
+                    created_at: '',
+                    password: ''
+                })
+            }
+        },
         mounted() {
             console.log('Profile Component mounted.')
+        },
+        created(){
+            axios.get('/api/profile').then(({data})=>this.form.fill(data));
         }
     }
 </script>

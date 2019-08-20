@@ -72391,8 +72391,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            form: new Form({
+                id: '',
+                name: '',
+                email: '',
+                bio: '',
+                type: '',
+                photo: '',
+                created_at: '',
+                password: ''
+            })
+        };
+    },
     mounted: function mounted() {
         console.log('Profile Component mounted.');
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/api/profile').then(function (_ref) {
+            var data = _ref.data;
+            return _this.form.fill(data);
+        });
     }
 });
 
@@ -72439,11 +72461,28 @@ var render = function() {
                         { staticClass: "col-sm-12" },
                         [
                           _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.name,
+                                expression: "form.name"
+                              }
+                            ],
                             staticClass: "form-control",
                             attrs: {
-                              type: "",
+                              type: "text",
                               id: "inputName",
                               placeholder: "Name"
+                            },
+                            domProps: { value: _vm.form.name },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "name", $event.target.value)
+                              }
                             }
                           }),
                           _vm._v(" "),
@@ -72470,11 +72509,28 @@ var render = function() {
                         { staticClass: "col-sm-12" },
                         [
                           _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.email,
+                                expression: "form.email"
+                              }
+                            ],
                             staticClass: "form-control",
                             attrs: {
                               type: "email",
                               id: "inputEmail",
                               placeholder: "Email"
+                            },
+                            domProps: { value: _vm.form.email },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "email", $event.target.value)
+                              }
                             }
                           }),
                           _vm._v(" "),
@@ -72501,10 +72557,27 @@ var render = function() {
                         { staticClass: "col-sm-12" },
                         [
                           _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.bio,
+                                expression: "form.bio"
+                              }
+                            ],
                             staticClass: "form-control",
                             attrs: {
                               id: "inputExperience",
                               placeholder: "Experience"
+                            },
+                            domProps: { value: _vm.form.bio },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "bio", $event.target.value)
+                              }
                             }
                           }),
                           _vm._v(" "),
