@@ -45,7 +45,8 @@
                                         <label for="inputName" class="col-sm-2 control-label">Name</label>
 
                                         <div class="col-sm-12">
-                                            <input type="text" v-model="form.name" class="form-control" id="inputName" placeholder="Name">
+                                            <input type="text" v-model="form.name" class="form-control" id="inputName"
+                                                   placeholder="Name">
                                             <has-error :form="form" field="name"></has-error>
                                         </div>
                                     </div>
@@ -53,7 +54,8 @@
                                         <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
                                         <div class="col-sm-12">
-                                            <input v-model="form.email"  type="email" class="form-control" id="inputEmail"
+                                            <input v-model="form.email" type="email" class="form-control"
+                                                   id="inputEmail"
                                                    placeholder="Email">
                                             <has-error :form="form" field="email"></has-error>
                                         </div>
@@ -71,7 +73,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Profile Photo</label>
                                         <div class="col-sm-12">
-                                            <input type="file" name="photo" class="form-input">
+                                            <input @change="updateProfile" type="file" name="photo" class="form-input">
                                         </div>
 
                                     </div>
@@ -120,18 +122,28 @@
                     name: '',
                     email: '',
                     bio: '',
-                    type: '',
                     photo: '',
-                    created_at: '',
                     password: ''
                 })
             }
         },
+        methods: {
+            updateProfile(e) {
+                let file = e.target.files[0];
+                console.log(file);
+                let reader = new FileReader();
+                let vm = this;
+                reader.onloadend = function (file) {
+                    vm.form.photo = reader.result;
+                };
+                reader.readAsDataURL(file);
+            },
+        },
         mounted() {
             console.log('Profile Component mounted.')
         },
-        created(){
-            axios.get('/api/profile').then(({data})=>this.form.fill(data));
+        created() {
+            axios.get('/api/profile').then(({data}) => this.form.fill(data));
         }
     }
 </script>
