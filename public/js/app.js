@@ -74623,9 +74623,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var file = e.target.files[0];
             console.log(file['size']);
             var reader = new FileReader();
+            var vm = this;
             if (file['size'] < 2111775) {
                 reader.onloadend = function (file) {
-                    this.form.photo = reader.result;
+                    vm.form.photo = reader.result;
                 };
                 reader.readAsDataURL(file);
             } else {
@@ -74857,8 +74858,9 @@ var render = function() {
                             staticClass: "form-control",
                             attrs: {
                               type: "password",
+                              name: "password",
                               id: "password",
-                              placeholder: "Passport"
+                              placeholder: "password"
                             }
                           }),
                           _vm._v(" "),

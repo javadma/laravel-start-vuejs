@@ -84,10 +84,10 @@
 
                                         <div class="col-sm-12">
                                             <input type="password"
-
+                                                   name="password"
                                                    class="form-control"
                                                    id="password"
-                                                   placeholder="Passport"
+                                                   placeholder="password"
 
                                             >
                                             <has-error :form="form" field="password"></has-error>
@@ -144,12 +144,13 @@
                 let file = e.target.files[0];
                 console.log(file['size']);
                 let reader = new FileReader();
+                let vm = this;
                 if (file['size'] < 2111775) {
                     reader.onloadend = function (file) {
-                        this.form.photo = reader.result;
+                        vm.form.photo = reader.result;
                     };
                     reader.readAsDataURL(file);
-                }else {
+                } else {
                     swal({
                         type: 'error',
                         title: 'Oops...',
