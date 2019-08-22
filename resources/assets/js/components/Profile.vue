@@ -1,9 +1,10 @@
 <style>
     .widget-user-header {
         background-position: center center;
+        height: 250px !important;
         -webkit-background-size: conver;
         background-size: conver;
-        height: 250px;
+
     }
 </style>
 <template>
@@ -11,10 +12,10 @@
         <div class="box box-widget widget-user mt-3">
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="widget-user-header bg-black" style="background: url('/img/user-cover.jpg') center center;">
-                <h3 class="widget-user-username">Elizabeth Pierce</h3>
+                <h3 class="widget-user-username">{{form.name}}</h3>
                 <h5 class="widget-user-desc">Web Designer</h5>
             </div>
-            <div class="widget-user-image">
+            <div class="widget-user-image justify-content-around">
                 <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar">
             </div>
 
@@ -36,7 +37,7 @@
                         <div class="tab-content">
                             <!-- Activity Tab -->
                             <div class="tab-pane" id="activity">
-                                <h3 class="text-center">Display User Activity</h3>
+                                <h3 class="text-center">{{form.bio}}</h3>
                             </div>
                             <!-- Setting Tab -->
                             <div class="tab-pane active show" id="settings">
@@ -139,6 +140,7 @@
                 this.$Progress.start();
                 this.form.put('/api/profile')
                     .then(() => {
+                        Fire.$emit('updateTable');
                         this.$Progress.finish();
                         swal.fire({
                             type: 'success',
@@ -167,12 +169,17 @@
                     });
                 }
             },
+            loadProfile() {
+                axios.get('/api/profile').then(({data}) => this.form.fill(data));
+            },
         },
         mounted() {
             console.log('Profile Component mounted.')
         },
         created() {
-            axios.get('/api/profile').then(({data}) => this.form.fill(data));
+            Fire.$on('updateTable', () => {
+                this.loadProfile();
+            });
         }
     }
 </script>

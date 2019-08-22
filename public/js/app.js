@@ -74465,7 +74465,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.widget-user-header {\n    background-position: center center;\n    background-size: conver;\n    height: 250px;\n}\n", ""]);
+exports.push([module.i, "\n.widget-user-header {\n    background-position: center center;\n    height: 250px !important;\n    background-size: conver;\n}\n", ""]);
 
 // exports
 
@@ -74476,6 +74476,7 @@ exports.push([module.i, "\n.widget-user-header {\n    background-position: cente
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -74619,6 +74620,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.$Progress.start();
             this.form.put('/api/profile').then(function () {
+                Fire.$emit('updateTable');
                 _this.$Progress.finish();
                 swal.fire({
                     type: 'success',
@@ -74645,17 +74647,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     text: 'You are uploading a large file'
                 });
             }
+        },
+        loadProfile: function loadProfile() {
+            var _this2 = this;
+
+            axios.get('/api/profile').then(function (_ref) {
+                var data = _ref.data;
+                return _this2.form.fill(data);
+            });
         }
     },
     mounted: function mounted() {
         console.log('Profile Component mounted.');
     },
     created: function created() {
-        var _this2 = this;
+        var _this3 = this;
 
-        axios.get('/api/profile').then(function (_ref) {
-            var data = _ref.data;
-            return _this2.form.fill(data);
+        Fire.$on('updateTable', function () {
+            _this3.loadProfile();
         });
     }
 });
@@ -74670,9 +74679,26 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "box box-widget widget-user mt-3" }, [
-      _vm._m(0),
+      _c(
+        "div",
+        {
+          staticClass: "widget-user-header bg-black",
+          staticStyle: {
+            background: "url('/img/user-cover.jpg') center center"
+          }
+        },
+        [
+          _c("h3", { staticClass: "widget-user-username" }, [
+            _vm._v(_vm._s(_vm.form.name))
+          ]),
+          _vm._v(" "),
+          _c("h5", { staticClass: "widget-user-desc" }, [
+            _vm._v("Web Designer")
+          ])
+        ]
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "widget-user-image" }, [
+      _c("div", { staticClass: "widget-user-image justify-content-around" }, [
         _c("img", {
           staticClass: "img-circle",
           attrs: { src: _vm.getProfilePhoto(), alt: "User Avatar" }
@@ -74683,11 +74709,19 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12 mt-3" }, [
         _c("div", { staticClass: "card" }, [
-          _vm._m(1),
+          _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "tab-content" }, [
-              _vm._m(2),
+              _c(
+                "div",
+                { staticClass: "tab-pane", attrs: { id: "activity" } },
+                [
+                  _c("h3", { staticClass: "text-center" }, [
+                    _vm._v(_vm._s(_vm.form.bio))
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "div",
@@ -74957,25 +74991,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "widget-user-header bg-black",
-        staticStyle: { background: "url('/img/user-cover.jpg') center center" }
-      },
-      [
-        _c("h3", { staticClass: "widget-user-username" }, [
-          _vm._v("Elizabeth Pierce")
-        ]),
-        _vm._v(" "),
-        _c("h5", { staticClass: "widget-user-desc" }, [_vm._v("Web Designer")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header p-2" }, [
       _c("ul", { staticClass: "nav nav-pills" }, [
         _c("li", { staticClass: "nav-item" }, [
@@ -74999,16 +75014,6 @@ var staticRenderFns = [
             [_vm._v("Settings")]
           )
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "tab-pane", attrs: { id: "activity" } }, [
-      _c("h3", { staticClass: "text-center" }, [
-        _vm._v("Display User Activity")
       ])
     ])
   }
