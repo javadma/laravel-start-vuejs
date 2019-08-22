@@ -74593,6 +74593,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -74615,13 +74617,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$Progress.start();
             this.form.put('/api/profile').then(function () {
                 _this.$Progress.finish();
+                swal.fire({
+                    type: 'success',
+                    title: 'Successfully',
+                    text: 'The Profile  Updated Successfully'
+                });
             }).catch(function () {
                 _this.$Progress.fail();
             });
         },
         updateProfile: function updateProfile(e) {
             var file = e.target.files[0];
-            console.log(file['size']);
             var reader = new FileReader();
             var vm = this;
             if (file['size'] < 2111775) {
@@ -74630,7 +74636,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 };
                 reader.readAsDataURL(file);
             } else {
-                swal({
+                swal.fire({
                     type: 'error',
                     title: 'Oops...',
                     text: 'You are uploading a large file'
@@ -74703,6 +74709,9 @@ var render = function() {
                               }
                             ],
                             staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("name")
+                            },
                             attrs: {
                               type: "text",
                               id: "inputName",
@@ -74751,6 +74760,9 @@ var render = function() {
                               }
                             ],
                             staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("email")
+                            },
                             attrs: {
                               type: "email",
                               id: "inputEmail",
@@ -74845,7 +74857,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "Passport (leave empty if\n                                        not changing)"
+                            "Passwort (leave empty if\n                                        not changing)"
                           )
                         ]
                       ),
@@ -74855,12 +74867,36 @@ var render = function() {
                         { staticClass: "col-sm-12" },
                         [
                           _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.password,
+                                expression: "form.password"
+                              }
+                            ],
                             staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("password")
+                            },
                             attrs: {
                               type: "password",
                               name: "password",
                               id: "password",
                               placeholder: "password"
+                            },
+                            domProps: { value: _vm.form.password },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "password",
+                                  $event.target.value
+                                )
+                              }
                             }
                           }),
                           _vm._v(" "),

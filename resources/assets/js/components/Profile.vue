@@ -46,7 +46,8 @@
 
                                         <div class="col-sm-12">
                                             <input type="text" v-model="form.name" class="form-control" id="inputName"
-                                                   placeholder="Name">
+                                                   placeholder="Name"
+                                                   :class="{ 'is-invalid': form.errors.has('name') }">
                                             <has-error :form="form" field="name"></has-error>
                                         </div>
                                     </div>
@@ -56,7 +57,8 @@
                                         <div class="col-sm-12">
                                             <input v-model="form.email" type="email" class="form-control"
                                                    id="inputEmail"
-                                                   placeholder="Email">
+                                                   placeholder="Email"
+                                                   :class="{ 'is-invalid': form.errors.has('email') }">
                                             <has-error :form="form" field="email"></has-error>
                                         </div>
                                     </div>
@@ -79,16 +81,16 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="password" class="col-sm-12 control-label">Passport (leave empty if
+                                        <label for="password" class="col-sm-12 control-label">Passwort (leave empty if
                                             not changing)</label>
 
                                         <div class="col-sm-12">
-                                            <input type="password"
+                                            <input type="password" v-model="form.password"
                                                    name="password"
                                                    class="form-control"
                                                    id="password"
                                                    placeholder="password"
-
+                                                   :class="{ 'is-invalid': form.errors.has('password') }"
                                             >
                                             <has-error :form="form" field="password"></has-error>
                                         </div>
@@ -135,6 +137,11 @@
                 this.form.put('/api/profile')
                     .then(() => {
                         this.$Progress.finish();
+                        swal.fire({
+                            type: 'success',
+                            title: 'Successfully',
+                            text: 'The Profile  Updated Successfully',
+                        });
                     })
                     .catch(() => {
                         this.$Progress.fail();
@@ -142,7 +149,6 @@
             },
             updateProfile(e) {
                 let file = e.target.files[0];
-                console.log(file['size']);
                 let reader = new FileReader();
                 let vm = this;
                 if (file['size'] < 2111775) {
@@ -151,7 +157,7 @@
                     };
                     reader.readAsDataURL(file);
                 } else {
-                    swal({
+                    swal.fire({
                         type: 'error',
                         title: 'Oops...',
                         text: 'You are uploading a large file',
