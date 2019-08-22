@@ -15,7 +15,7 @@
                 <h5 class="widget-user-desc">Web Designer</h5>
             </div>
             <div class="widget-user-image">
-                <img class="img-circle" src="/img/user3-128x128.jpg" alt="User Avatar">
+                <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar">
             </div>
 
         </div>
@@ -132,6 +132,9 @@
             }
         },
         methods: {
+            getProfilePhoto() {
+                return '/img/profile/' + this.form.photo;
+            },
             updateInfo() {
                 this.$Progress.start();
                 this.form.put('/api/profile')

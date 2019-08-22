@@ -74611,6 +74611,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        getProfilePhoto: function getProfilePhoto() {
+            return '/img/profile/' + this.form.photo;
+        },
         updateInfo: function updateInfo() {
             var _this = this;
 
@@ -74666,7 +74669,16 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "box box-widget widget-user mt-3" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "widget-user-image" }, [
+        _c("img", {
+          staticClass: "img-circle",
+          attrs: { src: _vm.getProfilePhoto(), alt: "User Avatar" }
+        })
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12 mt-3" }, [
@@ -74945,33 +74957,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "box box-widget widget-user mt-3" }, [
-      _c(
-        "div",
-        {
-          staticClass: "widget-user-header bg-black",
-          staticStyle: {
-            background: "url('/img/user-cover.jpg') center center"
-          }
-        },
-        [
-          _c("h3", { staticClass: "widget-user-username" }, [
-            _vm._v("Elizabeth Pierce")
-          ]),
-          _vm._v(" "),
-          _c("h5", { staticClass: "widget-user-desc" }, [
-            _vm._v("Web Designer")
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "widget-user-image" }, [
-        _c("img", {
-          staticClass: "img-circle",
-          attrs: { src: "/img/user3-128x128.jpg", alt: "User Avatar" }
-        })
-      ])
-    ])
+    return _c(
+      "div",
+      {
+        staticClass: "widget-user-header bg-black",
+        staticStyle: { background: "url('/img/user-cover.jpg') center center" }
+      },
+      [
+        _c("h3", { staticClass: "widget-user-username" }, [
+          _vm._v("Elizabeth Pierce")
+        ]),
+        _vm._v(" "),
+        _c("h5", { staticClass: "widget-user-desc" }, [_vm._v("Web Designer")])
+      ]
+    )
   },
   function() {
     var _vm = this
