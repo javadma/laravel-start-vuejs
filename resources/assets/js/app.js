@@ -59,6 +59,9 @@ Vue.component(
 Vue.component(
     'passport-personal-access-tokens',
     require('./components/passport/PersonalAccessTokens.vue'));
+Vue.component(
+    'not-found',
+    require('./components/NotFound.vue'));
 
 let routes = [
     {path: '/dashboard', component: require('./components/Dashboard.vue')},

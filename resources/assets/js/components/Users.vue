@@ -47,7 +47,13 @@
                 <!-- /.box -->
             </div>
         </div>
+
+        <!--        if user is not admin -->
+        <div v-show="!$gate.isAdmin()">
+            <not-found></not-found>
+        </div>
         <!-- Modal -->
+
         <div class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="addNewModal"
              aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -209,7 +215,9 @@
                 $('#addNew').modal('hide');
             },
             loadUsers() {
-                axios.get('/api/user').then(({data}) => (this.users = data.data));
+                if (this.$gate.isAdmin()) {
+                    axios.get('/api/user').then(({data}) => (this.users = data.data));
+                }
             },
         },
         created() {
