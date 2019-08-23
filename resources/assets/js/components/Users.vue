@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="row mt-3" v-show="$gate.isAdmin()">
+        <div class="row mt-3" v-show="$gate.isAdminOrIsAuthor()">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
@@ -49,7 +49,7 @@
         </div>
 
         <!--        if user is not admin -->
-        <div v-show="!$gate.isAdmin()">
+        <div v-show="!$gate.isAdminOrIsAuthor()">
             <not-found></not-found>
         </div>
         <!-- Modal -->
@@ -215,7 +215,7 @@
                 $('#addNew').modal('hide');
             },
             loadUsers() {
-                if (this.$gate.isAdmin()) {
+                if (this.$gate.isAdminOrIsAuthor()) {
                     axios.get('/api/user').then(({data}) => (this.users = data.data));
                 }
             },

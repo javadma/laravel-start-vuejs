@@ -64441,6 +64441,15 @@ var Gate = function () {
         value: function isUser() {
             return this.user.type === 'user';
         }
+    }, {
+        key: 'isAdminOrIsAuthor',
+        value: function isAdminOrIsAuthor() {
+            return this.isAdmin() || this.isAuthor();
+            // if (this.isAdmin() || this.isAuthor()) {
+            //     return true;
+            // }
+            // return false;
+        }
     }]);
 
     return Gate;
@@ -75729,7 +75738,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         loadUsers: function loadUsers() {
             var _this3 = this;
 
-            if (this.$gate.isAdmin()) {
+            if (this.$gate.isAdminOrIsAuthor()) {
                 axios.get('/api/user').then(function (_ref) {
                     var data = _ref.data;
                     return _this3.users = data.data;
@@ -75764,8 +75773,8 @@ var render = function() {
           {
             name: "show",
             rawName: "v-show",
-            value: _vm.$gate.isAdmin(),
-            expression: "$gate.isAdmin()"
+            value: _vm.$gate.isAdminOrIsAuthor(),
+            expression: "$gate.isAdminOrIsAuthor()"
           }
         ],
         staticClass: "row mt-3"
@@ -75850,8 +75859,8 @@ var render = function() {
           {
             name: "show",
             rawName: "v-show",
-            value: !_vm.$gate.isAdmin(),
-            expression: "!$gate.isAdmin()"
+            value: !_vm.$gate.isAdminOrIsAuthor(),
+            expression: "!$gate.isAdminOrIsAuthor()"
           }
         ]
       },
