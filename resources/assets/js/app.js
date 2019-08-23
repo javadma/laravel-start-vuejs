@@ -7,11 +7,15 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+
+import Gate from './Gate';
 import {AlertError, Form, HasError} from 'vform'
 import VueRouter from 'vue-router'
 import moment from 'moment'
 import Swal from 'sweetalert2'
 import VueProgressBar from 'vue-progressbar'
+
+Vue.prototype.$gate = new Gate(window.user);
 
 window.swal = Swal;
 window.component = new Vue();

@@ -10,7 +10,8 @@
         "intervention/image": "^2.5",
         "laravel/framework": "5.7.*",
         "laravel/passport": "^7.3",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.6",

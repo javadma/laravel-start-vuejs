@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="row mt-3">
+        <div class="row mt-3" v-show="$gate.isAdmin()">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">

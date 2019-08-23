@@ -73,16 +73,17 @@
                                             <has-error :form="form" field="bio"></has-error>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Profile Photo</label>
-                                        <div class="col-sm-12">
-                                            <input @change="updateProfile" type="file" name="photo" class="form-input">
+                                    <div class="col-sm-12">
+                                        <div class="custom-file">
+                                            <input @change="updateProfile" type="file" class="custom-file-input"
+                                                   name="photo" id="customFile">
+                                            <label class="custom-file-label" for="customFile">Choose Your Profile
+                                                Picture</label>
                                         </div>
-
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="password" class="col-sm-12 control-label">Passwort (leave empty if
+                                        <label for="password" class="col-sm-12 control-label">Password (leave empty if
                                             not changing)</label>
 
                                         <div class="col-sm-12">
@@ -134,7 +135,8 @@
         },
         methods: {
             getProfilePhoto() {
-                return '/img/profile/' + this.form.photo;
+                let photo = (this.form.photo.length > 200) ? this.form.photo : "img/profile/" + this.form.photo;
+                return photo;
             },
             updateInfo() {
                 this.$Progress.start();
@@ -177,6 +179,7 @@
             console.log('Profile Component mounted.')
         },
         created() {
+            this.loadProfile();
             Fire.$on('updateTable', () => {
                 this.loadProfile();
             });
