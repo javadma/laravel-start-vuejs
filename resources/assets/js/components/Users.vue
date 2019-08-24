@@ -23,7 +23,7 @@
                                 <th>Registered At</th>
                                 <th>Modify</th>
                             </tr>
-                            <tr v-for="user in users" :key="user.id">
+                            <tr v-for="user in users.data" :key="user.id">
                                 <td>{{user.id}}</td>
                                 <td>{{user.name}}</td>
                                 <td>{{user.email}}</td>
@@ -43,6 +43,11 @@
                         </table>
                     </div>
                     <!-- /.box-body -->
+                    <div class="card-footer">
+                        <div class="text-center">
+                            <pagination :data="users" @pagination-change-page="getUsers"></pagination>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.box -->
             </div>
@@ -214,9 +219,16 @@
                 this.$Progress.finish();
                 $('#addNew').modal('hide');
             },
+            // Our method to GET results from a Laravel endpoint
+            getUsers(page = 1) {
+                axios.get('api/user?page=' + page)
+                    .then(response => {
+                        this.users = response.data;
+                    });
+            },
             loadUsers() {
                 if (this.$gate.isAdminOrIsAuthor()) {
-                    axios.get('/api/user').then(({data}) => (this.users = data.data));
+                    axios.get('/api/user').then(({data}) => (this.users = data));
                 }
             },
         },

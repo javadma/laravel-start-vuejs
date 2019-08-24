@@ -2,8 +2,8 @@
     .widget-user-header {
         background-position: center center;
         height: 250px !important;
-        -webkit-background-size: conver;
-        background-size: conver;
+        /*-webkit-background-size: conver;*/
+        /*background-size: conver;*/
 
     }
 </style>
@@ -13,7 +13,7 @@
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="widget-user-header bg-black" style="background: url('/img/user-cover.jpg') center center;">
                 <h3 class="widget-user-username">{{form.name}}</h3>
-                <h5 class="widget-user-desc">Web Designer</h5>
+                <h5 class="widget-user-desc">{{this.form.type}}</h5>
             </div>
             <div class="widget-user-image justify-content-around">
                 <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar">

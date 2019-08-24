@@ -20,6 +20,7 @@ Vue.prototype.$gate = new Gate(window.user);
 window.swal = Swal;
 window.component = new Vue();
 window.Fire = new Vue();
+
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -62,6 +63,8 @@ Vue.component(
 Vue.component(
     'not-found',
     require('./components/NotFound.vue'));
+
+Vue.component('pagination', require('laravel-vue-pagination'));
 
 let routes = [
     {path: '/dashboard', component: require('./components/Dashboard.vue')},
